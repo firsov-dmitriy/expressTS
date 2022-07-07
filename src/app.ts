@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import AuthRouter from "./auth/authRoute";
 import PostRouter from "./post/PostRouter";
 import UsersRouter from "./users/UsersRoute";
 
@@ -12,6 +13,7 @@ const DB_URL =
 app.use(express.json());
 app.use("/api", PostRouter);
 app.use("/api", UsersRouter);
+app.use("/", AuthRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json("Server working");
