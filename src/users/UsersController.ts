@@ -1,9 +1,33 @@
 import { Request, Response } from "express";
-import { Users } from "../Types";
+import { IUser } from "../Types";
 import UserModel from "./UsersModel";
+import UsersSevice from "./UsersSevice";
 
 class UsersController {
-  async createUser(req: Request, res: Response) {
+  async registration(req: Request, res: Response) {
+    try {
+      const { email, password, name } = req.body;
+      const userData = await UsersSevice.registration(email, password, name);
+      res.cookie("refreshToken", userData.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+
+      return res.json(userData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async login(req: Request, res: Response) {
+    try {
+      const { email, name, password } = req.body;
+      const user = await UserModel.create({ email, name, password });
+      res.json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+  async logout(req: Request, res: Response) {
     try {
       const { email, name, password } = req.body;
       const user = await UserModel.create({ email, name, password });
@@ -14,7 +38,15 @@ class UsersController {
   }
   async getAllUsers(req: Request, res: Response) {
     try {
-      const users: Users[] = await UserModel.find();
+      const users: IUser[] = await UserModel.find();
+      return res.json(users);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+  async refresh(req: Request, res: Response) {
+    try {
+      const users: IUser[] = await UserModel.find();
       return res.json(users);
     } catch (error) {
       res.status(500).json(error);
@@ -38,11 +70,15 @@ class UsersController {
       const { id } = req.params;
       if (id) {
         const { email, name, password } = req.body;
-        const user = await UserModel.findByIdAndUpdate(id, {
-          name,
-          email,
-          password,
-        });
+        const user = await UserModel.findByIdAndUpdate(
+          id,
+          {
+            name,
+            email,
+            password,
+          },
+          { new: true }
+        );
         return res.json(user);
       } else {
         return res.send("You didn't enter an id.");
