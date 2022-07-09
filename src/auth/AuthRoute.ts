@@ -1,8 +1,8 @@
-import Router from "express";
-import authController from "./authController";
+// import Router from "express";
+// // import authController from "./authController";
 
-const AuthRouter = Router();
+// const AuthRouter = Router();
 
-AuthRouter.get("/sign", authController.sign);
+// AuthRouter.get("/sign", authController.sign);
 
-export default AuthRouter;
+// export default AuthRouter;
