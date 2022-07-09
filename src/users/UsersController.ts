@@ -6,8 +6,8 @@ import UsersSevice from "./UsersSevice";
 class UsersController {
   async registration(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
-      const userData = await UsersSevice.registration(email, password);
+      const { email, password, name } = req.body;
+      const userData = await UsersSevice.registration(email, password, name);
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,

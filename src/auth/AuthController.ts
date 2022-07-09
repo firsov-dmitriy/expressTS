@@ -1,10 +1,6 @@
-// import { Request, Response } from "express";
-// class AuthController {
-//   async sign(req: JWTRequest, res: Response) {
-//     jwt({ secret: "shhhhhhared-secret", algorithms: ["HS256"] });
-//     if (!req.auth?.admin) return res.sendStatus(401);
-//     res.sendStatus(200);
-//   }
-// }
+import { ObjectId } from "mongoose";
+import { Request, Response } from "express";
+import AuthService from "./AuthService";
+class AuthController {}
 
-// export default new AuthController();
+export default new AuthController();

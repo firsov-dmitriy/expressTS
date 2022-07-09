@@ -5,7 +5,7 @@ import UserDto from "./UserDto";
 import { IUser } from "../Types";
 
 class UsersSevice {
-  async registration(email: string, password: any) {
+  async registration(email: string, password: string, name: string) {
     const candidate = await UsersModel.findOne({ email });
     if (candidate) {
       throw new Error(`User with this email ${email} address already exists`);
@@ -13,6 +13,7 @@ class UsersSevice {
     const hashPassword = await bcrypt.hash(password, 3);
     const user: IUser = await UsersModel.create({
       email,
+      name,
       password: hashPassword,
     });
     const userDto = new UserDto(user);

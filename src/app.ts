@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
-// import AuthRouter from "./auth/authRoute";
+import AuthRouter from "./auth/AuthRoute";
 import PostRouter from "./post/PostRouter";
 import UsersRouter from "./users/UsersRoute";
 import dotenv from "dotenv";
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api", PostRouter);
 app.use(cookieParser());
 app.use("/api", UsersRouter);
-// app.use("/", AuthRouter);
+app.use("/api", AuthRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json("Server working");

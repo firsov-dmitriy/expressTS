@@ -1,12 +1,10 @@
 import { JwtPayload, sign } from "jsonwebtoken";
 import * as uuid from "uuid";
 import AuthModel from "./AuthModel";
+import { ObjectId } from "mongoose";
 
 class AuthService {
   generateToken(payload: JwtPayload) {
-    // const accessToken = sign(payload, process.env.JWT_ACCESS_SECRET, {
-    //   expiresIn: "30m",
-    // });
     if (
       typeof process.env.JWT_REFRESH_SECRET === "string" &&
       typeof process.env.JWT_ACCESS_SECRET === "string"
@@ -22,9 +20,6 @@ class AuthService {
         refreshToken,
       };
     }
-    // const refreshToken = sign(payload, process.env.JWT_REFRESH_SECRET, {
-    //   expiresIn: "30d",
-    // });
   }
 
   async saveToken(userId: uuid.V4Options | undefined, refreshToken: string) {

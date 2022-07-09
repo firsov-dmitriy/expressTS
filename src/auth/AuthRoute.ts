@@ -1,8 +1,8 @@
-// import Router from "express";
-// // import authController from "./authController";
+import Router from "express";
+import AuthController from "./AuthController";
 
-// const AuthRouter = Router();
+const AuthRouter = Router();
 
-// AuthRouter.get("/sign", authController.sign);
+AuthRouter.delete("/delete");
 
-// export default AuthRouter;
+export default AuthRouter;
