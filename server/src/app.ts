@@ -5,6 +5,7 @@ import PostRouter from "./post/PostRouter";
 import UsersRouter from "./users/UsersRoute";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -18,6 +19,13 @@ app.use("/api", AuthRouter);
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json("Server working");
 });
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 async function startApp() {
   try {
